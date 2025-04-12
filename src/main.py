@@ -13,7 +13,10 @@ template_path = "./template.html"
 git_dir = "https://github.com/Dev-Jace/static_site2/"
 
 def main():
-    basepath = sys.argv
+    if len(sys.argv)>1:
+        basepath = sys.argv[1]
+    else:
+        basepath = "/"
 
     print("Deleting public directory...")
     if os.path.exists(dir_path_public):
