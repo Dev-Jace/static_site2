@@ -7,9 +7,9 @@ def extract_title(markdown):
         raise Exception("no h1 title")
     return markdown.split("\n",1)[0].strip()[2:]
 
-def generate_page(from_path, template_path, dest_path):
+def generate_page(from_path, template_path, dest_path, basepath):
     
-    print(f"{from_path} {template_path} -> {dest_path}")
+    print(f"{basepath}{from_path} {template_path} -> {dest_path}")
     from_file = open(from_path, "r")
     markdown_content = from_file.read()
     from_file.close()
@@ -31,27 +31,15 @@ def generate_page(from_path, template_path, dest_path):
     to_file = open(dest_path, "w")
     to_file.write(template)
 
-def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
+def generate_pages_recursive(dir_path_content, template_path, dest_dir_path, basepath):
+    if basepath == None:
+        basepath = "/"
     for filename in os.listdir(dir_path_content):
         from_path = os.path.join(dir_path_content, filename)
         dest_path = os.path.join(dest_dir_path, filename)
         if os.path.isfile(from_path):
             dest_path = Path(dest_path).with_suffix(".html")
-            generate_page(from_path, template_path, dest_path)
+            generate_page(from_path, template_path, dest_path, basepath)
         else:
-            generate_pages_recursive(from_path, template_path, dest_path)
+            generate_pages_recursive(from_path, template_path, dest_path, basepath)
 
-
-
-
-
-
-def generate_pages2(dir_path_content, template_path, dest_dir_path):
-    dir_list = os.listdir(dir_path_content)
-    for item in dir_list:
-        content_path = os.path.join(dir_path_content, item)
-        dest_path = os.path.join(dest_dir_path, item)
-        if not os.path.isdir(content_path):
-            generate_page(content_path, template_path, dest_path+".html")
-        else: 
-            generate_pages(content_path , template_path, dest_path)
