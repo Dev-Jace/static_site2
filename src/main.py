@@ -7,7 +7,7 @@ import os, shutil, sys
 from inline_markdown import extract_markdown_links #temp for testing
 
 dir_path_static = "./static"
-dir_path_public = "./public"
+dir_path_public = "./docs" #"./public"
 dir_path_content = "./content"
 template_path = "./template.html"
 git_dir = "https://github.com/Dev-Jace/static_site2/"
